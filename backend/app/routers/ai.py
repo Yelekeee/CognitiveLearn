@@ -90,7 +90,7 @@ Always:
         client = anthropic.Anthropic(api_key=settings.anthropic_api_key)
         
         response = client.messages.create(
-            model="claude-sonnet-4-20250514",
+            model="claude-sonnet-4-6",
             max_tokens=1024,
             system=system_prompt,
             messages=messages
@@ -105,9 +105,9 @@ Always:
             }
         }
     except Exception as e:
-        # Fallback response if API not configured
+        error_hint = str(e)[:120]
         return {
-            "response": f"Привет! Я CogniLearn — ваш персональный учебный ассистент. Ваш стиль обучения: {learning_style}. Задайте мне вопрос по учебному материалу, и я помогу объяснить его с учетом вашего профиля.\n\n(Примечание: для полного функционала настройте ANTHROPIC_API_KEY)",
+            "response": f"Ошибка AI-ассистента: {error_hint}\n\nПроверьте ANTHROPIC_API_KEY в файле .env и перезапустите сервер.",
             "student_context": {
                 "learning_style": learning_style,
                 "cluster_label": cluster_label,
