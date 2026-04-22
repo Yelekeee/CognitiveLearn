@@ -63,10 +63,10 @@ export default function Dashboard() {
   const risk = RISK_CONFIG[data.risk.risk_level as keyof typeof RISK_CONFIG] ?? RISK_CONFIG.low
 
   return (
-    <div className="p-7 max-w-7xl mx-auto">
+    <div className="p-4 md:p-7 max-w-7xl mx-auto">
 
       {/* ── Header ── */}
-      <div className="flex items-center justify-between mb-7">
+      <div className="flex items-center justify-between mb-6">
         <div>
           <h1 className="text-[22px] font-bold text-gray-900 tracking-tight">Дашборд</h1>
           <p className="text-gray-500 text-sm mt-0.5">Добро пожаловать, {data.student.name}</p>
@@ -79,7 +79,7 @@ export default function Dashboard() {
       </div>
 
       {/* ── Top stats ── */}
-      <div className="grid grid-cols-4 gap-4 mb-6">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 mb-5">
         <div className="card">
           <div className="stat-value">{data.avg_score.toFixed(1)}%</div>
           <div className="stat-label">Средний балл</div>
@@ -105,7 +105,7 @@ export default function Dashboard() {
       </div>
 
       {/* ── Charts row ── */}
-      <div className="grid grid-cols-3 gap-5 mb-5">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-5 mb-4 md:mb-5">
 
         {/* Cognitive profile radar */}
         <div className="card">
@@ -135,7 +135,7 @@ export default function Dashboard() {
         </div>
 
         {/* Score trend */}
-        <div className="card col-span-2">
+        <div className="card md:col-span-2">
           <div className="section-title">Динамика успеваемости</div>
           {data.score_trend.length > 0 ? (
             <ResponsiveContainer width="100%" height={220}>
@@ -170,7 +170,7 @@ export default function Dashboard() {
       </div>
 
       {/* ── Bottom row ── */}
-      <div className="grid grid-cols-3 gap-5">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-5">
 
         {/* Risk factors */}
         <div className="card">
@@ -209,7 +209,7 @@ export default function Dashboard() {
         </div>
 
         {/* Course progress */}
-        <div className="card col-span-2">
+        <div className="card md:col-span-2">
           <div className="section-title">Прогресс по курсам</div>
           <div className="space-y-4">
             {data.course_progress.map(course => (

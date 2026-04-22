@@ -61,23 +61,23 @@ export default function TeacherAnalytics() {
   )
 
   return (
-    <div className="p-7 max-w-6xl mx-auto">
+    <div className="p-4 md:p-7 max-w-6xl mx-auto">
 
       {/* ── Header ── */}
-      <div className="flex items-center justify-between mb-7">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6 md:mb-7">
         <div>
           <h1 className="text-[22px] font-bold text-gray-900 tracking-tight">Аналитика</h1>
           <p className="text-gray-500 text-sm mt-0.5">Обзор успеваемости и ML-метрики</p>
         </div>
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2">
           <select
-            className="input text-sm w-52"
+            className="input text-sm flex-1 sm:w-48"
             value={courseId}
             onChange={e => setCourseId(Number(e.target.value))}
           >
             {COURSES.map(c => <option key={c.id} value={c.id}>{c.name}</option>)}
           </select>
-          <button onClick={handleRetrain} disabled={retraining} className="btn-primary text-sm px-4 py-2">
+          <button onClick={handleRetrain} disabled={retraining} className="btn-primary text-sm px-3 py-2 whitespace-nowrap">
             {retraining ? 'Обучение...' : 'Переобучить ML'}
           </button>
         </div>
@@ -97,7 +97,7 @@ export default function TeacherAnalytics() {
       )}
 
       {/* ── Top 3 stat cards ── */}
-      <div className="grid grid-cols-3 gap-5 mb-5">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-5 mb-4 md:mb-5">
 
         {/* Cluster distribution */}
         <div className="card">

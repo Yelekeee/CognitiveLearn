@@ -45,8 +45,8 @@ export default function CoursesPage() {
   )
 
   return (
-    <div className="p-6 max-w-4xl mx-auto">
-      <h1 className="text-xl font-bold text-gray-900 mb-6">Курсы</h1>
+    <div className="p-4 md:p-6 max-w-4xl mx-auto">
+      <h1 className="text-[22px] font-bold text-gray-900 tracking-tight mb-5">Курсы</h1>
       <div className="space-y-3">
         {courses.map(course => (
           <div key={course.id} className="bg-white border border-gray-100 rounded-xl shadow-sm overflow-hidden">

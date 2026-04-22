@@ -1,7 +1,7 @@
 import { NavLink, useNavigate } from 'react-router-dom'
 import { useAuthStore } from '../store/auth'
 
-/* ── Minimal SVG icon set ── */
+/* ── Icons ── */
 const Icon = {
   dashboard: (
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" className="w-[18px] h-[18px]">
@@ -58,20 +58,21 @@ const Icon = {
 interface NavItem {
   to: string
   label: string
+  short: string   // short label for mobile bottom nav
   icon: React.ReactNode
 }
 
 const studentNav: NavItem[] = [
-  { to: '/dashboard',  label: 'Дашборд',        icon: Icon.dashboard },
-  { to: '/courses',    label: 'Курсы',           icon: Icon.courses   },
-  { to: '/path',       label: 'Путь обучения',   icon: Icon.path      },
-  { to: '/analytics',  label: 'Аналитика',       icon: Icon.analytics },
-  { to: '/assistant',  label: 'ИИ-Ассистент',    icon: Icon.ai        },
+  { to: '/dashboard',  label: 'Дашборд',       short: 'Главная', icon: Icon.dashboard },
+  { to: '/courses',    label: 'Курсы',          short: 'Курсы',   icon: Icon.courses   },
+  { to: '/path',       label: 'Путь обучения',  short: 'Путь',    icon: Icon.path      },
+  { to: '/analytics',  label: 'Аналитика',      short: 'Статы',   icon: Icon.analytics },
+  { to: '/assistant',  label: 'ИИ-Ассистент',   short: 'ИИ',      icon: Icon.ai        },
 ]
 
 const teacherNav: NavItem[] = [
-  { to: '/teacher/class',     label: 'Класс',     icon: Icon.users     },
-  { to: '/teacher/analytics', label: 'Аналитика', icon: Icon.analytics },
+  { to: '/teacher/class',     label: 'Класс',     short: 'Класс',  icon: Icon.users     },
+  { to: '/teacher/analytics', label: 'Аналитика', short: 'Статы',  icon: Icon.analytics },
 ]
 
 export default function Layout({ children }: { children: React.ReactNode }) {
@@ -85,16 +86,16 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     navigate('/login')
   }
 
-  /* Initials avatar */
   const initials = user?.name
     ? user.name.split(' ').map(w => w[0]).slice(0, 2).join('').toUpperCase()
     : '?'
 
   return (
     <div className="flex min-h-screen bg-surface">
-      {/* ── Sidebar ── */}
+
+      {/* ── Desktop sidebar (hidden on mobile) ── */}
       <aside
-        className="w-[240px] flex-shrink-0 flex flex-col"
+        className="hidden md:flex w-[240px] flex-shrink-0 flex-col"
         style={{ background: 'var(--sidebar-bg)' }}
       >
         {/* Logo */}
@@ -115,18 +116,15 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           </div>
         </div>
 
-        {/* Nav */}
+        {/* Nav links */}
         <nav className="flex-1 px-3 py-4 space-y-0.5">
           {nav.map((item) => (
             <NavLink
               key={item.to}
               to={item.to}
               className={({ isActive }) =>
-                `flex items-center gap-3 px-3 py-2.5 rounded-lg text-[13px] font-medium
-                 transition-all duration-150 ${
-                  isActive
-                    ? 'text-white'
-                    : 'hover:text-white/75'
+                `flex items-center gap-3 px-3 py-2.5 rounded-lg text-[13px] font-medium transition-all duration-150 ${
+                  isActive ? 'text-white' : 'hover:text-white/75'
                 }`
               }
               style={({ isActive }) => isActive
@@ -140,7 +138,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           ))}
         </nav>
 
-        {/* User */}
+        {/* User + logout */}
         <div className="p-3" style={{ borderTop: '1px solid var(--sidebar-border)' }}>
           <div className="flex items-center gap-3 px-3 py-2 mb-1 rounded-lg">
             <div
@@ -150,16 +148,10 @@ export default function Layout({ children }: { children: React.ReactNode }) {
               {initials}
             </div>
             <div className="min-w-0">
-              <div
-                className="text-[12px] font-medium truncate"
-                style={{ color: 'rgba(255,255,255,0.80)' }}
-              >
+              <div className="text-[12px] font-medium truncate" style={{ color: 'rgba(255,255,255,0.80)' }}>
                 {user?.name}
               </div>
-              <div
-                className="text-[10px] truncate"
-                style={{ color: 'rgba(255,255,255,0.30)' }}
-              >
+              <div className="text-[10px] truncate" style={{ color: 'rgba(255,255,255,0.30)' }}>
                 {user?.email}
               </div>
             </div>
@@ -178,9 +170,42 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       </aside>
 
       {/* ── Main content ── */}
-      <main className="flex-1 min-w-0 overflow-auto">
+      <main className="flex-1 min-w-0 overflow-auto pb-20 md:pb-0">
         {children}
       </main>
+
+      {/* ── Mobile bottom navigation ── */}
+      <nav
+        className="md:hidden fixed bottom-0 inset-x-0 flex z-50 border-t"
+        style={{
+          background: 'var(--sidebar-bg)',
+          borderColor: 'var(--sidebar-border)',
+          paddingBottom: 'env(safe-area-inset-bottom)',
+        }}
+      >
+        {nav.map((item) => (
+          <NavLink
+            key={item.to}
+            to={item.to}
+            className="flex-1 flex flex-col items-center justify-center py-2.5 gap-0.5 transition-colors"
+            style={({ isActive }) => ({
+              color: isActive ? 'rgba(255,255,255,0.95)' : 'rgba(255,255,255,0.35)',
+            })}
+          >
+            {item.icon}
+            <span className="text-[9px] font-medium">{item.short}</span>
+          </NavLink>
+        ))}
+        {/* Logout on far right for mobile */}
+        <button
+          onClick={handleLogout}
+          className="flex flex-col items-center justify-center py-2.5 gap-0.5 px-2 transition-colors"
+          style={{ color: 'rgba(255,255,255,0.25)' }}
+        >
+          {Icon.logout}
+          <span className="text-[9px] font-medium">Выйти</span>
+        </button>
+      </nav>
     </div>
   )
 }

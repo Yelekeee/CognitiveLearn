@@ -27,10 +27,10 @@ export default function LearningPath() {
   if (!data) return null
 
   return (
-    <div className="p-6 max-w-4xl mx-auto">
-      <div className="flex items-center justify-between mb-6">
-        <h1 className="text-xl font-bold text-gray-900">Путь обучения</h1>
-        <div className="flex gap-4">
+    <div className="p-4 md:p-6 max-w-4xl mx-auto">
+      <div className="mb-5">
+        <h1 className="text-[22px] font-bold text-gray-900 tracking-tight mb-2">Путь обучения</h1>
+        <div className="flex flex-wrap gap-3">
           {Object.entries(STATUS_CONFIG).map(([status, cfg]) => (
             <div key={status} className="flex items-center gap-1.5 text-xs text-gray-500">
               <div className={`w-2 h-2 rounded-full ${cfg.dot}`} />

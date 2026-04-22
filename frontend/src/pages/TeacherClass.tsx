@@ -53,17 +53,17 @@ export default function TeacherClass() {
   )
 
   return (
-    <div className="p-7">
-      <div className="flex items-center justify-between mb-7">
+    <div className="p-4 md:p-7">
+      <div className="flex items-center justify-between mb-5 md:mb-7">
         <div>
           <h1 className="text-[22px] font-bold text-gray-900 tracking-tight">Обзор класса</h1>
           <p className="text-gray-500 text-sm mt-0.5">{stats.total} студентов · {stats.high} в группе риска</p>
         </div>
-        <Link to="/teacher/analytics" className="btn-secondary text-sm">Аналитика курсов</Link>
+        <Link to="/teacher/analytics" className="btn-secondary text-sm">Аналитика</Link>
       </div>
 
       {/* Stats */}
-      <div className="grid grid-cols-4 gap-4 mb-6">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 mb-5">
         <div className="card"><div className="stat-value">{stats.total}</div><div className="stat-label">Всего студентов</div></div>
         <div className="card"><div className="stat-value text-red-600">{stats.high}</div><div className="stat-label">Высокий риск</div></div>
         <div className="card"><div className="stat-value text-amber-600">{stats.medium}</div><div className="stat-label">Средний риск</div></div>
@@ -71,27 +71,27 @@ export default function TeacherClass() {
       </div>
 
       {/* Filters */}
-      <div className="flex gap-3 mb-4">
+      <div className="flex flex-col sm:flex-row gap-2 mb-4">
         <input
-          className="input max-w-xs"
+          className="input"
           placeholder="Поиск студента..."
           value={search}
           onChange={e => setSearch(e.target.value)}
         />
-        <select className="input w-44" value={filterRisk} onChange={e => setFilterRisk(e.target.value)}>
+        <select className="input sm:w-40" value={filterRisk} onChange={e => setFilterRisk(e.target.value)}>
           <option value="all">Все риски</option>
           <option value="high">Высокий риск</option>
           <option value="medium">Средний риск</option>
           <option value="low">Норма</option>
         </select>
-        <select className="input w-56" value={filterCluster} onChange={e => setFilterCluster(e.target.value)}>
+        <select className="input sm:w-48" value={filterCluster} onChange={e => setFilterCluster(e.target.value)}>
           <option value="all">Все кластеры</option>
           {clusters.map(c => <option key={c} value={c}>{c}</option>)}
         </select>
       </div>
 
       {/* Table */}
-      <div className="bg-white border border-gray-100 rounded-xl overflow-hidden" style={{ boxShadow: 'var(--card-shadow)' }}>
+      <div className="bg-white border border-gray-100 rounded-xl overflow-hidden overflow-x-auto" style={{ boxShadow: 'var(--card-shadow)' }}>
         <table className="w-full text-sm">
           <thead className="bg-gray-50 border-b border-gray-100">
             <tr>

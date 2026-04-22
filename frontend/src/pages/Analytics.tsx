@@ -22,11 +22,11 @@ export default function Analytics() {
   const diff = data.student_avg - data.class_avg
 
   return (
-    <div className="p-6 max-w-6xl mx-auto">
+    <div className="p-4 md:p-6 max-w-6xl mx-auto">
       <h1 className="text-[22px] font-bold text-gray-900 tracking-tight mb-6">Моя аналитика</h1>
 
       {/* Stats */}
-      <div className="grid grid-cols-4 gap-4 mb-6">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 mb-5">
         <div className="card">
           <div className="stat-value">{data.student_avg.toFixed(1)}%</div>
           <div className="stat-label">Мой средний балл</div>
@@ -45,7 +45,7 @@ export default function Analytics() {
         </div>
       </div>
 
-      <div className="grid grid-cols-2 gap-6 mb-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 mb-5">
         {/* Score trend */}
         <div className="card">
           <h3 className="text-sm font-semibold text-gray-900 mb-4">Баллы за 8 недель</h3>
